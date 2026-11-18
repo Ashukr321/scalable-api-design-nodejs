@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebSocket Chat</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 0 auto; padding: 16px; color: #0f172a; }
+    form { display: flex; gap: 8px; margin-bottom: 12px; }
+    input { flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font: inherit; }
+    button { padding: 8px 14px; border: 0; border-radius: 6px; background: #2563eb; color: #fff; font: inherit; cursor: pointer; }
+    button:disabled { background: #94a3b8; cursor: default; }
+    #log { list-style: none; padding: 12px; margin: 0 0 12px; height: 50vh; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px; }
+    #log li { margin: 4px 0; }
+    #log .sys { color: #64748b; font-style: italic; }
+    #log time { color: #94a3b8; font-size: 12px; margin-right: 6px; }
+    .meta { color: #475569; font-size: 14px; min-height: 1.4em; }
+  </style>
+</head>
+<body>
+  <h1>WebSocket Chat</h1>
+  <p class="meta">Status: <strong id="status">disconnected</strong> · Online: <span id="users">-</span></p>
+
+  <form id="join">
+    <label hidden for="name">Name</label><input id="name" placeholder="Your name" maxlength="32" required>
+    <label hidden for="room">Room</label><input id="room" placeholder="room (a-z, 0-9, -)" value="general" pattern="[a-z0-9-]{1,32}" required>
+    <button>Join</button>
+  </form>
+
+  <ul id="log" aria-live="polite"></ul>
+  <p class="meta" id="typing"></p>
+
+  <form id="send">
+    <label hidden for="text">Message</label><input id="text" placeholder="Type a message" maxlength="1000" autocomplete="off" disabled>
+    <button disabled>Send</button>
+  </form>
+
+  <script src="chat-client.js"></script>
+</body>
+</html>
