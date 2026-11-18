@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#475569"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#dc2626"/></marker>
+    <style>
+      text{font-family:"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font-size:26px;font-weight:700}.s{font-size:14px;fill:#475569}.b{font-size:15px;font-weight:600}
+      .l{font-size:13px}.sm{font-size:12px;fill:#475569}
+    </style>
+  </defs>
+  <rect width="900" height="600" fill="#f8fafc"/>
+  <text x="40" y="48" class="t">Webhook</text>
+  <text x="40" y="72" class="s">Event-driven HTTP callback — the provider calls YOUR endpoint when something happens</text>
+
+  <rect x="40" y="95" width="220" height="60" rx="10" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="150" y="121" text-anchor="middle" class="b">Provider</text>
+  <text x="150" y="141" text-anchor="middle" class="sm">e.g. payment gateway, GitHub</text>
+  <rect x="340" y="95" width="220" height="60" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="450" y="121" text-anchor="middle" class="b">Your API endpoint</text>
+  <text x="450" y="141" text-anchor="middle" class="sm">POST /webhooks/payments</text>
+  <rect x="640" y="95" width="220" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="750" y="121" text-anchor="middle" class="b">Queue / Worker</text>
+  <text x="750" y="141" text-anchor="middle" class="sm">BullMQ · RabbitMQ · SQS</text>
+
+  <g stroke="#94a3b8" stroke-dasharray="4 4">
+    <line x1="150" y1="155" x2="150" y2="520"/><line x1="450" y1="155" x2="450" y2="520"/>
+    <line x1="750" y1="155" x2="750" y2="520"/>
+  </g>
+
+  <g stroke="#475569" stroke-width="1.5" marker-end="url(#a)">
+    <line x1="450" y1="190" x2="154" y2="190"/>
+    <line x1="150" y1="272" x2="446" y2="272"/>
+    <line x1="450" y1="355" x2="746" y2="355"/>
+    <line x1="450" y1="395" x2="154" y2="395"/>
+  </g>
+  <text x="300" y="182" text-anchor="middle" class="l">1. Register URL + shared secret</text>
+
+  <rect x="40" y="215" width="220" height="28" rx="6" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="150" y="234" text-anchor="middle" class="l">2. Event: payment.succeeded</text>
+
+  <text x="300" y="256" text-anchor="middle" class="l">3. POST JSON + X-Signature (HMAC)</text>
+
+  <rect x="320" y="295" width="260" height="34" rx="6" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="450" y="317" text-anchor="middle" class="l">4. Verify signature · dedupe by event id</text>
+
+  <text x="600" y="347" text-anchor="middle" class="l">5. Enqueue job</text>
+  <text x="300" y="387" text-anchor="middle" class="l">6. 200 OK — respond fast</text>
+
+  <rect x="630" y="425" width="240" height="34" rx="6" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="750" y="447" text-anchor="middle" class="l">7. Process: update order, send email</text>
+
+  <line x1="150" y1="495" x2="446" y2="495" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#r)"/>
+  <text x="300" y="487" text-anchor="middle" font-size="13" fill="#dc2626">On timeout / non-2xx → retry with backoff</text>
+
+  <text x="40" y="556" class="s">vs polling: no wasted requests, near real-time.</text>
+  <text x="40" y="578" class="s">Your endpoint must be public (HTTPS), verify signatures, be idempotent, and return 2xx quickly.</text>
+</svg>

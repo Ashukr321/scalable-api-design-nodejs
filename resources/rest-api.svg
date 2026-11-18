@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#475569"/></marker>
+    <style>
+      text{font-family:"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font-size:26px;font-weight:700}.s{font-size:14px;fill:#475569}.b{font-size:15px;font-weight:600}
+      .m{font-family:Consolas,"Courier New",monospace;font-size:13px}.sm{font-size:12px;fill:#475569}
+      .v{font-size:11px;font-weight:700;fill:#fff}
+    </style>
+  </defs>
+  <rect width="900" height="600" fill="#f8fafc"/>
+  <text x="40" y="48" class="t">REST API</text>
+  <text x="40" y="72" class="s">Resources identified by URLs, changed with HTTP methods, stateless JSON over HTTP</text>
+
+  <rect x="40" y="100" width="160" height="250" rx="12" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="120" y="218" text-anchor="middle" class="b">Client</text>
+  <text x="120" y="240" text-anchor="middle" class="sm">Browser · Mobile · Service</text>
+
+  <rect x="640" y="100" width="220" height="250" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="750" y="128" text-anchor="middle" class="b">API Server (Node.js)</text>
+  <g fill="#fff" stroke="#16a34a">
+    <rect x="660" y="145" width="180" height="36" rx="6"/><rect x="660" y="191" width="180" height="36" rx="6"/>
+    <rect x="660" y="237" width="180" height="36" rx="6"/><rect x="660" y="283" width="180" height="36" rx="6"/>
+  </g>
+  <g text-anchor="middle" font-size="13">
+    <text x="750" y="168">Router</text><text x="750" y="214">Middleware (auth, validation)</text>
+    <text x="750" y="260">Controller</text><text x="750" y="306">Service / Model</text>
+  </g>
+
+  <g stroke="#475569" stroke-width="1.5" marker-end="url(#a)">
+    <line x1="200" y1="135" x2="636" y2="135"/><line x1="200" y1="180" x2="636" y2="180"/>
+    <line x1="200" y1="225" x2="636" y2="225"/><line x1="200" y1="270" x2="636" y2="270"/>
+    <line x1="200" y1="315" x2="636" y2="315"/>
+  </g>
+  <rect x="220" y="113" width="62" height="18" rx="4" fill="#16a34a"/><text x="251" y="126" text-anchor="middle" class="v">GET</text>
+  <rect x="220" y="158" width="62" height="18" rx="4" fill="#2563eb"/><text x="251" y="171" text-anchor="middle" class="v">POST</text>
+  <rect x="220" y="203" width="62" height="18" rx="4" fill="#16a34a"/><text x="251" y="216" text-anchor="middle" class="v">GET</text>
+  <rect x="220" y="248" width="62" height="18" rx="4" fill="#d97706"/><text x="251" y="261" text-anchor="middle" class="v">PATCH</text>
+  <rect x="220" y="293" width="62" height="18" rx="4" fill="#dc2626"/><text x="251" y="306" text-anchor="middle" class="v">DELETE</text>
+  <text x="292" y="126" class="m">/api/v1/users</text><text x="620" y="126" text-anchor="end" class="sm">200 OK · list</text>
+  <text x="292" y="171" class="m">/api/v1/users</text><text x="620" y="171" text-anchor="end" class="sm">201 Created</text>
+  <text x="292" y="216" class="m">/api/v1/users/42</text><text x="620" y="216" text-anchor="end" class="sm">200 OK · one user</text>
+  <text x="292" y="261" class="m">/api/v1/users/42</text><text x="620" y="261" text-anchor="end" class="sm">200 OK · partial update</text>
+  <text x="292" y="306" class="m">/api/v1/users/42</text><text x="620" y="306" text-anchor="end" class="sm">204 No Content</text>
+
+  <line x1="750" y1="352" x2="750" y2="378" stroke="#475569" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <path d="M690 395 v60 a60 14 0 0 0 120 0 v-60" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <ellipse cx="750" cy="395" rx="60" ry="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="750" y="440" text-anchor="middle" class="b">Database</text>
+
+  <rect x="40" y="380" width="280" height="150" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="56" y="404" class="b">Request</text>
+  <text x="56" y="430" class="m">GET /api/v1/users/42 HTTP/1.1</text>
+  <text x="56" y="450" class="m">Host: api.example.com</text>
+  <text x="56" y="470" class="m">Accept: application/json</text>
+  <text x="56" y="490" class="m">Authorization: Bearer &lt;token&gt;</text>
+
+  <rect x="340" y="380" width="280" height="150" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="356" y="404" class="b">Response</text>
+  <text x="356" y="430" class="m">HTTP/1.1 200 OK</text>
+  <text x="356" y="450" class="m">Content-Type: application/json</text>
+  <text x="356" y="470" class="m">{ "id": 42, "name": "Asha",</text>
+  <text x="356" y="490" class="m">  "email": "asha@example.com" }</text>
+
+  <text x="40" y="572" class="s">Stateless · Cacheable · Uniform interface · Client–server · Layered system</text>
+</svg>

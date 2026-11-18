@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#475569"/></marker>
+    <style>
+      text{font-family:"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font-size:26px;font-weight:700}.s{font-size:14px;fill:#475569}.b{font-size:15px;font-weight:600}
+      .m{font-family:Consolas,"Courier New",monospace;font-size:13px;white-space:pre}.sm{font-size:12px;fill:#475569}
+    </style>
+  </defs>
+  <rect width="900" height="600" fill="#f8fafc"/>
+  <text x="40" y="48" class="t">GraphQL API</text>
+  <text x="40" y="72" class="s">One endpoint, typed schema — the client asks for exactly the fields it needs</text>
+
+  <rect x="40" y="110" width="150" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="115" y="145" text-anchor="middle" class="b">Web app</text>
+  <rect x="40" y="200" width="150" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="115" y="235" text-anchor="middle" class="b">Mobile app</text>
+  <text x="196" y="102" class="sm">POST /graphql</text>
+  <g stroke="#475569" stroke-width="1.5" marker-end="url(#a)" fill="none">
+    <path d="M190 140 L296 170"/><path d="M190 230 L296 230"/>
+  </g>
+
+  <rect x="300" y="100" width="260" height="200" rx="12" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="430" y="127" text-anchor="middle" class="b">GraphQL Server</text>
+  <g fill="#fff" stroke="#db2777">
+    <rect x="320" y="142" width="220" height="38" rx="6"/><rect x="320" y="190" width="220" height="38" rx="6"/>
+    <rect x="320" y="238" width="220" height="38" rx="6"/>
+  </g>
+  <g text-anchor="middle" font-size="13">
+    <text x="430" y="166">Schema (types, Query, Mutation)</text>
+    <text x="430" y="214">Resolvers (one per field)</text>
+    <text x="430" y="262">DataLoader · auth · caching</text>
+  </g>
+
+  <g stroke="#475569" stroke-width="1.5" marker-end="url(#a)">
+    <line x1="560" y1="125" x2="646" y2="125"/><line x1="560" y1="200" x2="646" y2="200"/>
+    <line x1="560" y1="275" x2="646" y2="275"/>
+  </g>
+  <g fill="#dcfce7" stroke="#16a34a" stroke-width="2">
+    <rect x="650" y="100" width="210" height="50" rx="10"/><rect x="650" y="175" width="210" height="50" rx="10"/>
+    <rect x="650" y="250" width="210" height="50" rx="10"/>
+  </g>
+  <g text-anchor="middle" class="b">
+    <text x="755" y="130">PostgreSQL</text><text x="755" y="205">Users REST service</text>
+    <text x="755" y="280">Orders microservice</text>
+  </g>
+
+  <rect x="40" y="340" width="260" height="200" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="56" y="364" class="b">Query (client decides shape)</text>
+  <text x="56" y="390" class="m" xml:space="preserve">query {</text>
+  <text x="56" y="408" class="m" xml:space="preserve">  user(id: 42) {</text>
+  <text x="56" y="426" class="m" xml:space="preserve">    name</text>
+  <text x="56" y="444" class="m" xml:space="preserve">    orders(last: 2) {</text>
+  <text x="56" y="462" class="m" xml:space="preserve">      id</text>
+  <text x="56" y="480" class="m" xml:space="preserve">      total</text>
+  <text x="56" y="498" class="m" xml:space="preserve">    }</text>
+  <text x="56" y="516" class="m" xml:space="preserve">  }</text>
+  <text x="56" y="534" class="m" xml:space="preserve">}</text>
+
+  <rect x="320" y="340" width="260" height="200" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="336" y="364" class="b">Response (same shape)</text>
+  <text x="336" y="390" class="m" xml:space="preserve">{ "data": {</text>
+  <text x="336" y="408" class="m" xml:space="preserve">  "user": {</text>
+  <text x="336" y="426" class="m" xml:space="preserve">    "name": "Asha",</text>
+  <text x="336" y="444" class="m" xml:space="preserve">    "orders": [</text>
+  <text x="336" y="462" class="m" xml:space="preserve">      {"id":"o1","total":499},</text>
+  <text x="336" y="480" class="m" xml:space="preserve">      {"id":"o2","total":120}</text>
+  <text x="336" y="498" class="m" xml:space="preserve">    ]</text>
+  <text x="336" y="516" class="m" xml:space="preserve">} } }</text>
+
+  <rect x="600" y="340" width="260" height="200" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <text x="616" y="364" class="b">Operation types</text>
+  <text x="616" y="392" font-size="13"><tspan font-weight="700">Query</tspan> — read data</text>
+  <text x="616" y="416" font-size="13"><tspan font-weight="700">Mutation</tspan> — create / update / delete</text>
+  <text x="616" y="440" font-size="13"><tspan font-weight="700">Subscription</tspan> — real-time (WebSocket)</text>
+  <text x="616" y="474" class="sm">No over-fetching or under-fetching.</text>
+  <text x="616" y="494" class="sm">Errors come back in an "errors" array,</text>
+  <text x="616" y="512" class="sm">usually with HTTP 200.</text>
+
+  <text x="40" y="572" class="s">Best for: many clients with different data needs, aggregating several backends behind one API</text>
+</svg>

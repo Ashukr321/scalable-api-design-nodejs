@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#475569"/></marker>
+    <style>
+      text{font-family:"Segoe UI",Arial,sans-serif;fill:#0f172a}
+      .t{font-size:26px;font-weight:700}.s{font-size:14px;fill:#475569}.b{font-size:15px;font-weight:600}
+      .m{font-family:Consolas,"Courier New",monospace;font-size:13px}.p{font-size:12px;font-weight:700}
+    </style>
+  </defs>
+  <rect width="900" height="620" fill="#f8fafc"/>
+  <text x="40" y="48" class="t">WebSocket</text>
+  <text x="40" y="72" class="s">One persistent, full-duplex TCP connection, upgraded from HTTP — either side can send any time</text>
+
+  <rect x="40" y="165" width="820" height="100" rx="8" fill="#e0f2fe"/>
+  <rect x="40" y="275" width="820" height="200" rx="8" fill="#dcfce7"/>
+  <rect x="40" y="485" width="820" height="75" rx="8" fill="#fee2e2"/>
+  <text x="52" y="183" class="p" fill="#0369a1">1 · Handshake (HTTP Upgrade)</text>
+  <text x="52" y="293" class="p" fill="#15803d">2 · Open connection — frames both ways</text>
+  <text x="52" y="503" class="p" fill="#b91c1c">3 · Close</text>
+
+  <rect x="90" y="95" width="220" height="56" rx="10" fill="#fff" stroke="#0284c7" stroke-width="2"/>
+  <text x="200" y="120" text-anchor="middle" class="b">Client</text>
+  <text x="200" y="140" text-anchor="middle" font-size="12" fill="#475569">new WebSocket("wss://…")</text>
+  <rect x="590" y="95" width="220" height="56" rx="10" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+  <text x="700" y="120" text-anchor="middle" class="b">Server</text>
+  <text x="700" y="140" text-anchor="middle" font-size="12" fill="#475569">ws / Socket.IO (Node.js)</text>
+
+  <g stroke="#64748b" stroke-dasharray="4 4">
+    <line x1="200" y1="151" x2="200" y2="560"/><line x1="700" y1="151" x2="700" y2="560"/>
+  </g>
+
+  <g stroke="#475569" stroke-width="1.5" marker-end="url(#a)">
+    <line x1="200" y1="210" x2="696" y2="210"/>
+    <line x1="700" y1="250" x2="204" y2="250"/>
+    <line x1="200" y1="325" x2="696" y2="325"/>
+    <line x1="700" y1="365" x2="204" y2="365"/>
+    <line x1="700" y1="405" x2="204" y2="405"/>
+    <line x1="204" y1="450" x2="696" y2="450" marker-start="url(#a)"/>
+    <line x1="200" y1="520" x2="696" y2="520"/>
+    <line x1="700" y1="550" x2="204" y2="550"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="450" y="202" class="m">GET /chat · Upgrade: websocket · Sec-WebSocket-Key</text>
+    <text x="450" y="242" class="m">101 Switching Protocols · Sec-WebSocket-Accept</text>
+    <text x="450" y="317" class="m">{"type":"message","text":"hi"}</text>
+    <text x="450" y="357" font-size="13">server push: new message from another user</text>
+    <text x="450" y="397" font-size="13">server push: "Asha is typing…"</text>
+    <text x="450" y="442" font-size="13">ping ⇄ pong (heartbeat keeps connection alive)</text>
+    <text x="450" y="512" font-size="13">Close frame (code 1000)</text>
+    <text x="450" y="542" font-size="13">Close frame echoed · TCP closed</text>
+  </g>
+
+  <text x="40" y="592" class="s">Use for: chat, live dashboards, multiplayer games, notifications · ws:// or wss:// (TLS)</text>
+  <text x="40" y="612" class="s">Scaling: sticky sessions + Redis pub/sub to fan out messages across server instances</text>
+</svg>
