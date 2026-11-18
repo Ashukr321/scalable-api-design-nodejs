@@ -1,0 +1,63 @@
+### Raw SOAP calls (VS Code REST Client). Replace the account number after CreateAccount.
+@base = http://localhost:3000/soap/bank
+@account = 1234567890
+
+### Get the WSDL contract
+GET {{base}}?wsdl
+
+### CreateAccount
+POST {{base}}
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://example.com/bank/CreateAccount"
+
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bank="http://example.com/bank">
+  <soap:Body>
+    <bank:CreateAccountRequest>
+      <bank:ownerName>Asha Verma</bank:ownerName>
+      <bank:currency>INR</bank:currency>
+    </bank:CreateAccountRequest>
+  </soap:Body>
+</soap:Envelope>
+
+### GetAccount
+POST {{base}}
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://example.com/bank/GetAccount"
+
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bank="http://example.com/bank">
+  <soap:Body>
+    <bank:GetAccountRequest><bank:accountNumber>{{account}}</bank:accountNumber></bank:GetAccountRequest>
+  </soap:Body>
+</soap:Envelope>
+
+### Deposit
+POST {{base}}
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://example.com/bank/Deposit"
+
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bank="http://example.com/bank">
+  <soap:Body>
+    <bank:DepositRequest>
+      <bank:accountNumber>{{account}}</bank:accountNumber>
+      <bank:amount>1500.75</bank:amount>
+    </bank:DepositRequest>
+  </soap:Body>
+</soap:Envelope>
+
+### Withdraw (try a huge amount to see a soap:Fault)
+POST {{base}}
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://example.com/bank/Withdraw"
+
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bank="http://example.com/bank">
+  <soap:Body>
+    <bank:WithdrawRequest>
+      <bank:accountNumber>{{account}}</bank:accountNumber>
+      <bank:amount>500.25</bank:amount>
+    </bank:WithdrawRequest>
+  </soap:Body>
+</soap:Envelope>

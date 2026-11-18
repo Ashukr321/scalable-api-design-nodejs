@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The contract. Clients generate code from this file (GET /soap/bank?wsdl). -->
+<definitions name="BankService"
+  targetNamespace="http://example.com/bank"
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tns="http://example.com/bank"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <!-- 1. types: XSD schema for every message element -->
+  <types>
+    <xsd:schema targetNamespace="http://example.com/bank" elementFormDefault="qualified">
+      <xsd:simpleType name="AccountNumber">
+        <xsd:restriction base="xsd:string"><xsd:pattern value="[0-9]{10}"/></xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Account">
+        <xsd:sequence>
+          <xsd:element name="accountNumber" type="tns:AccountNumber"/>
+          <xsd:element name="ownerName" type="xsd:string"/>
+          <xsd:element name="currency" type="xsd:string"/>
+          <xsd:element name="balance" type="xsd:decimal"/>
+          <xsd:element name="createdAt" type="xsd:dateTime"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:element name="CreateAccountRequest">
+        <xsd:complexType><xsd:sequence>
+          <xsd:element name="ownerName" type="xsd:string"/>
+          <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence></xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetAccountRequest">
+        <xsd:complexType><xsd:sequence>
+          <xsd:element name="accountNumber" type="tns:AccountNumber"/>
+        </xsd:sequence></xsd:complexType>
+      </xsd:element>
+
+      <!-- Deposit and Withdraw share one request shape -->
+      <xsd:complexType name="MoneyRequest">
+        <xsd:sequence>
+          <xsd:element name="accountNumber" type="tns:AccountNumber"/>
+          <xsd:element name="amount" type="xsd:decimal"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="DepositRequest" type="tns:MoneyRequest"/>
+      <xsd:element name="WithdrawRequest" type="tns:MoneyRequest"/>
+
+      <xsd:element name="AccountResponse">
+        <xsd:complexType><xsd:sequence>
+          <xsd:element name="account" type="tns:Account"/>
+        </xsd:sequence></xsd:complexType>
+      </xsd:element>
+
+      <!-- Sent inside soap:Fault/detail -->
+      <xsd:element name="BankFault">
+        <xsd:complexType><xsd:sequence>
+          <xsd:element name="code" type="xsd:string"/>
+          <xsd:element name="message" type="xsd:string"/>
+        </xsd:sequence></xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <!-- 2. messages: what travels in the Body -->
+  <message name="CreateAccountInput"><part name="parameters" element="tns:CreateAccountRequest"/></message>
+  <message name="GetAccountInput"><part name="parameters" element="tns:GetAccountRequest"/></message>
+  <message name="DepositInput"><part name="parameters" element="tns:DepositRequest"/></message>
+  <message name="WithdrawInput"><part name="parameters" element="tns:WithdrawRequest"/></message>
+  <message name="AccountOutput"><part name="parameters" element="tns:AccountResponse"/></message>
+  <message name="BankFaultMessage"><part name="fault" element="tns:BankFault"/></message>
+
+  <!-- 3. portType: the abstract interface (operations) -->
+  <portType name="BankPortType">
+    <operation name="CreateAccount">
+      <input message="tns:CreateAccountInput"/><output message="tns:AccountOutput"/><fault name="BankFault" message="tns:BankFaultMessage"/>
+    </operation>
+    <operation name="GetAccount">
+      <input message="tns:GetAccountInput"/><output message="tns:AccountOutput"/><fault name="BankFault" message="tns:BankFaultMessage"/>
+    </operation>
+    <operation name="Deposit">
+      <input message="tns:DepositInput"/><output message="tns:AccountOutput"/><fault name="BankFault" message="tns:BankFaultMessage"/>
+    </operation>
+    <operation name="Withdraw">
+      <input message="tns:WithdrawInput"/><output message="tns:AccountOutput"/><fault name="BankFault" message="tns:BankFaultMessage"/>
+    </operation>
+  </portType>
+
+  <!-- 4. binding: SOAP 1.1, document/literal over HTTP -->
+  <binding name="BankBinding" type="tns:BankPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="CreateAccount">
+      <soap:operation soapAction="http://example.com/bank/CreateAccount"/>
+      <input><soap:body use="literal"/></input><output><soap:body use="literal"/></output><fault name="BankFault"><soap:fault name="BankFault" use="literal"/></fault>
+    </operation>
+    <operation name="GetAccount">
+      <soap:operation soapAction="http://example.com/bank/GetAccount"/>
+      <input><soap:body use="literal"/></input><output><soap:body use="literal"/></output><fault name="BankFault"><soap:fault name="BankFault" use="literal"/></fault>
+    </operation>
+    <operation name="Deposit">
+      <soap:operation soapAction="http://example.com/bank/Deposit"/>
+      <input><soap:body use="literal"/></input><output><soap:body use="literal"/></output><fault name="BankFault"><soap:fault name="BankFault" use="literal"/></fault>
+    </operation>
+    <operation name="Withdraw">
+      <soap:operation soapAction="http://example.com/bank/Withdraw"/>
+      <input><soap:body use="literal"/></input><output><soap:body use="literal"/></output><fault name="BankFault"><soap:fault name="BankFault" use="literal"/></fault>
+    </operation>
+  </binding>
+
+  <!-- 5. service + port: where it lives -->
+  <service name="BankService">
+    <port name="BankPort" binding="tns:BankBinding">
+      <soap:address location="http://localhost:3000/soap/bank"/>
+    </port>
+  </service>
+</definitions>

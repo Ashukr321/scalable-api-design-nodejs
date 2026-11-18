@@ -1,0 +1,26 @@
+{
+  "name": "soap-api",
+  "version": "1.0.0",
+  "description": "SOAP API example: a Bank Accounts web service (WSDL, SOAP 1.1, faults) on Node.js, Express 5 and MongoDB",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "dev": "node --watch --env-file-if-exists=.env src/server.js",
+    "client": "node src/client.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "mongoose": "^9.12.2",
+    "soap": "^1.14.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
+  }
+}
