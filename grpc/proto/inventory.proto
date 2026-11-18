@@ -1,0 +1,71 @@
+// The contract. Server and every client (any language) are built from this file.
+syntax = "proto3";
+
+// Version in the package name: breaking changes go to inventory.v2, old clients keep working.
+package inventory.v1;
+
+service InventoryService {
+  // Unary: one request, one response.
+  rpc CreateProduct(CreateProductRequest) returns (Product);
+  rpc GetProduct(GetProductRequest) returns (Product);
+
+  // Server streaming: one request, many responses (streamed straight from a MongoDB cursor).
+  rpc ListProducts(ListProductsRequest) returns (stream Product);
+
+  // Client streaming: many requests, one summary at the end.
+  rpc ImportProducts(stream CreateProductRequest) returns (ImportSummary);
+
+  // Bidirectional streaming: stock changes in, new stock levels out, on one open call.
+  rpc UpdateStock(stream StockChange) returns (stream StockLevel);
+}
+
+message Product {
+  string id = 1;
+  string sku = 2;
+  string name = 3;
+  int64 price_cents = 4; // money as integer minor units, never float
+  int32 stock = 5;
+  string created_at = 6; // RFC 3339
+}
+
+message CreateProductRequest {
+  string sku = 1;
+  string name = 2;
+  int64 price_cents = 3;
+  int32 stock = 4;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message ListProductsRequest {
+  bool in_stock_only = 1;
+}
+
+message ImportError {
+  int32 index = 1; // position in the stream, 0-based
+  string sku = 2;
+  string message = 3;
+}
+
+message ImportSummary {
+  int32 created = 1;
+  int32 failed = 2;
+  repeated ImportError errors = 3;
+}
+
+message StockChange {
+  string sku = 1;
+  int32 delta = 2; // +5 = received, -2 = sold
+}
+
+message StockLevel {
+  string sku = 1;
+  int32 stock = 2;
+  bool ok = 3;
+  string error = 4; // set when ok = false; the stream stays open
+}
+
+// Field numbers, not names, go on the wire. Never reuse or change a number;
+// mark removed ones as `reserved 7;` instead.

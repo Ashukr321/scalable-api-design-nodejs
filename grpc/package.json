@@ -1,0 +1,28 @@
+{
+  "name": "grpc-inventory",
+  "version": "1.0.0",
+  "description": "gRPC example: Inventory service with unary, server-streaming, client-streaming and bidirectional calls on Node.js, MongoDB and an Express REST gateway",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "dev": "node --watch --env-file-if-exists=.env src/server.js",
+    "gateway": "node --env-file-if-exists=.env src/gateway.js",
+    "client": "node --env-file-if-exists=.env src/client.js",
+    "test": "node --test --test-timeout=10000"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.7",
+    "@grpc/proto-loader": "^0.8.1",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "mongoose": "^9.12.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
+  }
+}
