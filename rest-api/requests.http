@@ -1,0 +1,57 @@
+@base = http://localhost:3000/api/v1
+# Paste an id from a list/create response here
+@id = REPLACE_WITH_PRODUCT_ID
+
+### Health
+GET http://localhost:3000/health
+
+### List all
+GET {{base}}/products
+
+### Filter + sort + fields + pagination
+GET {{base}}/products?category=electronics&minPrice=20&maxPrice=100&sort=-price&fields=name,price,stock&page=1&limit=5
+
+### Search by name, only in stock
+GET {{base}}/products?q=code&inStock=true
+
+### Get one
+GET {{base}}/products/{{id}}
+
+### Create (201 + Location)
+POST {{base}}/products
+Content-Type: application/json
+
+{
+  "name": "USB-C Hub",
+  "sku": "el-hub-003",
+  "price": 29.99,
+  "category": "electronics",
+  "stock": 50,
+  "tags": ["usb", "accessories"]
+}
+
+### Create invalid (422)
+POST {{base}}/products
+Content-Type: application/json
+
+{ "name": "X", "price": -5, "category": "cars" }
+
+### Partial update (PATCH)
+PATCH {{base}}/products/{{id}}
+Content-Type: application/json
+
+{ "price": 24.99, "stock": 45 }
+
+### Full replace (PUT) - fields not sent reset to defaults
+PUT {{base}}/products/{{id}}
+Content-Type: application/json
+
+{
+  "name": "USB-C Hub Pro",
+  "sku": "EL-HUB-003",
+  "price": 39.99,
+  "category": "electronics"
+}
+
+### Delete (204)
+DELETE {{base}}/products/{{id}}
